@@ -29,6 +29,35 @@
     'Chantilly' => 0.5,
     'Nappache chocolat' => 1
   ];
+  $ingredients = [];
+  $total = 0;
+
+  if (isset($_GET["parfum"])) {
+    foreach ($_GET["parfum"] as $parfum) {
+      if(isset($parfums[$parfum])) {
+        $ingredients[] = $parfum;
+        $total += $parfums[$parfum];
+      }
+    }
+  }
+
+  if (isset($_GET["supplement"])) {
+    foreach ($_GET["supplement"] as $supplement) {
+      if(isset($supplements[$supplement])) {
+        $ingredients[] = $supplement;
+        $total += $supplements[$supplement];
+      }
+    }
+  }
+
+  if (isset($_GET["cornet"])) {
+    $cornet = $_GET['cornet'];
+      if(isset($cornets[$cornet])) {
+        $ingredients[] = $cornet;
+        $total += $cornets[$cornet];
+      }
+  }
+
 
   function checkbox (string $name, string $value , array $data): string
   {
@@ -54,48 +83,71 @@
 
   ?>
 
-  <h1 class="ms-5 mt-5">Composez votre glace :</h1>
+  <h1 class="ms-5 mt-5 mb-5">Composez votre glace :</h1>
 
-  <form action="/iceCream.php" method="GET" class="ms-5 mt-5">
-    
-    <div class="form-group mt-3">
-      <h2> Choisissez vos parfums </h2>
-      <?php foreach ( $parfums as $parfum => $prix): ?>
-        <div class="checkbox">
-          <label>
-            <?= checkbox('parfum', $parfum, $_GET) ?>
-            <?=$parfum?> - <?=$prix?> €
-          </label>
+  <div class="row">
+
+    <div class="col-md-4">
+      <div class="card">
+        <div class="card-body">
+          <div class="card-title">
+            <h5>Votre glace : </h5>
+            <ul>
+              <?php foreach($ingredients as $ingredient) : ?>
+                <li><?= $ingredient?></li>
+              <?php endforeach; ?> 
+            </ul>
+            <p>
+              <strong>Prix : </strong><?= $total?> €
+            </p>
+          </div>
         </div>
-      <?php endforeach ; ?>
-    </div>
-    
-    <div class="form-group mt-3">
-      <h2> Choisissez votre cornet </h2>
-      <?php foreach ( $cornets as $cornet => $prix): ?>
-        <div class="radio">
-          <label>
-          <?= radio('cornet', $cornet, $_GET) ?>
-            <?=$cornet?> - <?=$prix?> €
-          </label>
-        </div>
-      <?php endforeach ; ?>
+      </div>
     </div>
 
-    <div class="form-group mt-3">
-      <h2> Choisissez vos suppléments </h2>
-      <?php foreach ( $supplements as $supplement => $prix): ?>
-        <div class="checkbox">
-          <label>
-            <?= checkbox('supplement', $supplement, $_GET) ?>
-            <?=$supplement?> - <?=$prix?> €
-          </label>
-        </div>
-      <?php endforeach ; ?>
-    </div>
+    <form action="/iceCream.php" method="GET" class="col-md-8">
+      
+      <div class="form-group mt-3">
+        <h2> Choisissez vos parfums </h2>
+        <?php foreach ( $parfums as $parfum => $prix): ?>
+          <div class="checkbox">
+            <label>
+              <?= checkbox('parfum', $parfum, $_GET) ?>
+              <?=$parfum?> - <?=$prix?> €
+            </label>
+          </div>
+        <?php endforeach ; ?>
+      </div>
+      
+      <div class="form-group mt-3">
+        <h2> Choisissez votre cornet </h2>
+        <?php foreach ( $cornets as $cornet => $prix): ?>
+          <div class="radio">
+            <label>
+            <?= radio('cornet', $cornet, $_GET) ?>
+              <?=$cornet?> - <?=$prix?> €
+            </label>
+          </div>
+        <?php endforeach ; ?>
+      </div>
+  
+      <div class="form-group mt-3">
+        <h2> Choisissez vos suppléments </h2>
+        <?php foreach ( $supplements as $supplement => $prix): ?>
+          <div class="checkbox">
+            <label>
+              <?= checkbox('supplement', $supplement, $_GET) ?>
+              <?=$supplement?> - <?=$prix?> €
+            </label>
+          </div>
+        <?php endforeach ; ?>
+      </div>
+  
+    <button type="submit" class="btn btn-primary mt-3">Composer ma glace</button>
+    </form>
 
-  <button type="submit" class="btn btn-primary mt-3">Composer ma glace</button>
-  </form>
+  </div>
+
 
 </body>
 
