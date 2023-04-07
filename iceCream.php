@@ -11,21 +11,42 @@
 
 <body>
 
+  <?php
+  $parfums = [
+      'Pistache' => 4,
+      'Vanille' => 3,
+      'Chocolat' => 3,
+      'Banane' => 4,
+      'Citron' => 4,
+      'Straciatella' => 5
+  ];
+  $cornets = [
+    'Pot' => 2,
+    'Cornet' => 3
+  ];
+  $supplement = [
+    'Pépites de chocolat' => 1,
+    'Chantilly' => 0.5,
+    'Nappache chocolat' => 1
+  ];
+  ?>
+
+  <h1 class="mx-auto mt-5 text-center">Composez votre glace :</h1>
+
   <form action="/iceCream.php" method="GET" class="mx-auto mt-5" style="width: 200px;">
     <div class="form-group">
-      <input type="checkbox" name="parfum[]" value="Fraise"> Fraise <br>
-      <input type="checkbox" name="parfum[]" value="Pistache"> Pistache <br>
-      <input type="checkbox" name="parfum[]" value="Vanille"> Vanille <br>
-      <input type="checkbox" name="parfum[]" value="Chocolat"> Chocolat <br>
-      <input type="checkbox" name="parfum[]" value="Banane"> Banane <br>
-      <input type="checkbox" name="parfum[]" value="Citron"> Citron <br>
-      <input type="checkbox" name="parfum[]" value="Straciatella"> Straciatella <br>
+      <?php foreach ( $parfums as $parfum => $prix): ?>
+        <div class="checkbox">
+          <label>
+            <input type="checkbox" name="parfum[]" value="<?=$parfum?>">
+            <?=$parfum?> - <?=$prix?> €
+          </label>
+        </div>
+      <?php endforeach ; ?>
     </div>
-  <button type="submit" class="btn btn-primary mt-3">Choisir</button>
+  <button type="submit" class="btn btn-primary mt-3">Composer ma glace</button>
   </form>
-  <h2>GET</h2>
-  <pre><?php var_dump($_GET) ?></pre>
-  
+
 </body>
 
 </html>
