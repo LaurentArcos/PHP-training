@@ -24,26 +24,76 @@
     'Pot' => 2,
     'Cornet' => 3
   ];
-  $supplement = [
+  $supplements = [
     'Pépites de chocolat' => 1,
     'Chantilly' => 0.5,
     'Nappache chocolat' => 1
   ];
+
+  function checkbox (string $name, string $value , array $data): string
+  {
+    $attributes ="";
+    if (isset($data[$name]) && in_array($value, $data[$name] )){
+      $attributes .= 'checked';
+    }
+    return <<<HTML
+      <input type="checkbox" name="{$name}[]" value="$value">
+      HTML;
+  }
+
+  function radio (string $name, string $value , array $data): string
+  {
+    $attributes ="";
+    if (isset($data[$name]) && $value === $data[$name] ){
+      $attributes .= 'checked';
+    }
+    return <<<HTML
+      <input type="radio" name="{$name}" value="$value">
+      HTML;
+  }
+
   ?>
 
-  <h1 class="mx-auto mt-5 text-center">Composez votre glace :</h1>
+  <h1 class="ms-5 mt-5">Composez votre glace :</h1>
 
-  <form action="/iceCream.php" method="GET" class="mx-auto mt-5" style="width: 200px;">
-    <div class="form-group">
+  <form action="/iceCream.php" method="GET" class="ms-5 mt-5">
+    
+    <div class="form-group mt-3">
+      <h2> Choisissez vos parfums </h2>
       <?php foreach ( $parfums as $parfum => $prix): ?>
         <div class="checkbox">
           <label>
-            <input type="checkbox" name="parfum[]" value="<?=$parfum?>">
+            <?= checkbox('parfum', $parfum, $_GET) ?>
             <?=$parfum?> - <?=$prix?> €
           </label>
         </div>
       <?php endforeach ; ?>
     </div>
+    
+    <div class="form-group mt-3">
+      <h2> Choisissez votre cornet </h2>
+      <?php foreach ( $cornets as $cornet => $prix): ?>
+        <div class="radio">
+          <label>
+          <?= radio('cornet', $cornet, $_GET) ?>
+            <?=$cornet?> - <?=$prix?> €
+          </label>
+        </div>
+      <?php endforeach ; ?>
+    </div>
+
+    <div class="form-group mt-3">
+      <h2> Choisissez vos suppléments </h2>
+      <?php foreach ( $supplements as $supplement => $prix): ?>
+        <div class="checkbox">
+          <label>
+            <?= checkbox('supplement', $supplement, $_GET) ?>
+            <?=$supplement?> - <?=$prix?> €
+          </label>
+        </div>
+      <?php endforeach ; ?>
+    </div>
+
   <button type="submit" class="btn btn-primary mt-3">Composer ma glace</button>
   </form>
 
