@@ -98,7 +98,7 @@
               <?php endforeach; ?> 
             </ul>
             <p>
-              <strong>Prix : </strong><?= $total?> €
+              <strong>Prix : </strong><?= $total?> 
             </p>
           </div>
         </div>
